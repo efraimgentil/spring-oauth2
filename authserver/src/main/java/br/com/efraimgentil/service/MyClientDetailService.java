@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by efraimgentil<efraimgentil@gmail.com> on 08/06/16.
@@ -34,8 +35,11 @@ public class MyClientDetailService implements ClientDetailsService {
 
   @Override
   public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String clientFullName = clientId + authentication.getName();
+    System.out.println("authentication = " + authentication);
     JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-    BaseClientDetails result = clientsMap.get(clientId);
+    BaseClientDetails result = clientsMap.get( clientFullName );
     if(result == null) {
       try {
         result = jdbcTemplate.queryForObject(
@@ -59,11 +63,24 @@ public class MyClientDetailService implements ClientDetailsService {
                     return result;
                   }
                 });
-        clientsMap.put(clientId , result );
+        result = loadAuthorities( result , clientId , authentication  , jdbcTemplate);
+        clientsMap.put( clientFullName , result );
       } catch (Exception e) {
         throw new ClientRegistrationException("Não localizou o client");
       }
     }
+    return result;
+  }
+
+  private BaseClientDetails loadAuthorities(BaseClientDetails result , String clientId , Authentication authentication , JdbcTemplate jdbcTemplate) {
+    List<String> strings = jdbcTemplate.queryForList("SELECT permissao FROM public.tb_usuario_permissao_client WHERE client_id = ? and login = ?"
+            , new Object[]{clientId, authentication.getName() }
+            , String.class);
+    List<GrantedAuthority> authorities = new ArrayList<>();
+    for(String permissao : strings ){
+      authorities.add( new SimpleGrantedAuthority( "PERM_" + permissao ) );
+    }
+    result.setAuthorities( authorities );
     return result;
   }
 

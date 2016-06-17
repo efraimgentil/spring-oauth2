@@ -103,7 +103,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   @Override
   public void configure(final ResourceServerSecurityConfigurer config) {
     config.tokenServices(tokenServices());
-    config.resourceId("sigerh");
+    config.resourceId("resource1");
   }
 
   @Bean

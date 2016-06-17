@@ -25,7 +25,7 @@ public class FooController {
   }
 
 
-  @PreAuthorize("hasAuthority('ROLE_HADUKEN')")
+  @PreAuthorize("#oauth2.clientHasRole('PERM_USUARIO_LISTAR')")
   @RequestMapping(method = RequestMethod.GET, value = "/hey")
   @ResponseBody
   public String teste() {
