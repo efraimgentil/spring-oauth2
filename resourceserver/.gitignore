@@ -6,4 +6,5 @@ bin
 .settings
 .classpath
 classpath
+*.iml
 
