@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>auth-app</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body ng-app="myApp" ng-controller="mainCtrl">
+<oauth
+  site="http://localhost:8080"
+  client-id="rh"
+  redirect-uri="http://localhost:31999/auth-app/index.html"
+  scope="read"
+  template="oauthTemplate.html">
+</oauth>
+ 
+<h1>Foo Details</h1>
+<label >ID</label><span>{{foo.id}}</span>
+<label>Name</label><span>{{foo.name}}</span>
+</div>
+<a href="#" ng-click="getFoo()">New Foo</a>
+ 
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-resource.min.js">
+</script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js">
+</script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.9/ngStorage.min.js"></script>
+<script src="app/app.js"></script>
+<script src="js/oauth-ng.js"></script>
+</body>
+</html>
