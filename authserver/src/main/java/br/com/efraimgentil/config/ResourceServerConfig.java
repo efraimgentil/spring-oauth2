@@ -31,7 +31,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 import java.io.IOException;
 
 /**
@@ -42,17 +41,11 @@ import java.io.IOException;
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-
   @Autowired
   TokenStore tokenStore;
-  @Autowired
-  AuthenticationManager manager;
-
-  private TokenExtractor tokenExtractor = new BearerTokenExtractor();
 
   @Override
   public void configure(final HttpSecurity http) throws Exception {
-    /*http.authenticationProvider( )*/
     http.addFilterBefore(new CORSFilter(), AbstractPreAuthenticatedProcessingFilter.class)
             .addFilterAfter(new OncePerRequestFilter() {
               @Override
@@ -71,23 +64,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             .sessionManagement()
             .and().requestMatchers().antMatchers( "/ws/**" ).and()
             .authorizeRequests().antMatchers("/ws/**").authenticated();
-//            .requestMatchers().antMatchers("/foos/**","/bars/**")
-//            .and()
-//            .authorizeRequests()
-//                .antMatchers(HttpMethod.GET,"/foos/**").access("#oauth2.hasScope('foo') and #oauth2.hasScope('read')")
-//                .antMatchers(HttpMethod.POST,"/foos/**").access("#oauth2.hasScope('foo') and #oauth2.hasScope('write')")
-//                .antMatchers(HttpMethod.GET,"/bars/**").access("#oauth2.hasScope('bar') and #oauth2.hasScope('read')")
-//                .antMatchers(HttpMethod.POST,"/bars/**").access("#oauth2.hasScope('bar') and #oauth2.hasScope('write') and hasRole('ROLE_ADMIN')")
-    // @formatter:on
   }
-
-  /*@Bean
-  public AuthenticationManager authenticationManager(){
-    DefaultTokenServices defaultTokenServices = tokenServices();
-    OAuth2AuthenticationManager oAuth2AuthenticationManager = new OAuth2AuthenticationManager();
-    oAuth2AuthenticationManager.setTokenServices( defaultTokenServices );
-    return oAuth2AuthenticationManager;
-  }*/
 
   @Override
   public void configure(final ResourceServerSecurityConfigurer config) {

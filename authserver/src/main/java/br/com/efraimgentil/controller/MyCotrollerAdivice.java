@@ -29,8 +29,7 @@ public class MyCotrollerAdivice {
   @ResponseStatus(value= HttpStatus.UNAUTHORIZED)
   @ResponseBody
   protected ErrorMessage handleAccessDeniedException(AccessDeniedException ex) {
-    return new ErrorMessage();
+    return new ErrorMessage( "Acesso negado" , ex.getMessage() );
   }
-
 
 }

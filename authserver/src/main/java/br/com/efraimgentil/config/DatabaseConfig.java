@@ -59,6 +59,4 @@ public class DatabaseConfig  {
     return flyway;
   }
 
-
-
 }
