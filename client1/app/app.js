@@ -18,15 +18,35 @@ app.factory('oauthHttpInterceptor', function (Storage) {
     }
   };
 });
-app.config(function ($httpProvider) {
-  $httpProvider.interceptors.push('oauthHttpInterceptor');
+app.factory('responseObserver', function ($q , $window) {
+    return {
+        responseError: function (errorResponse) {
+            switch (errorResponse.status) {
+                case 403:
+                    alert("Você não tem acesso a esse recurso");
+                    break;
+                case 500:
+                    alert("Ouve um problema interno");
+                    break;
+            }
+            return $q.reject(errorResponse);
+        }
+    };
 });
- 
-app.controller('mainCtrl', function($scope,$resource,$http) {
-  
+app.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('oauthHttpInterceptor');
+    $httpProvider.interceptors.push('responseObserver');
+});
+
+
+var http;
+app.controller('mainCtrl', function($scope,$resource, $http) {
+    http =  $http;
+    
     $scope.foo = {id:0 , name:"sample foo"};
     $scope.foos = $resource( "http://localhost:9080/hey");
     $scope.getFoo = function(){
         $scope.foo = $scope.foos.get();
+        console.log( $scope.foo );
     } 
 });

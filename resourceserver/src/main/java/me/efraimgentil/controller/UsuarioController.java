@@ -27,14 +27,14 @@ public class UsuarioController {
   JdbcTemplate jdbcTemplate;
 
 
-  @PreAuthorize(value = "hasAuthority('PERM_USUARIO_LISTAR')")
+  @PreAuthorize(value = "#oauth2.clientHasRole('PERM_USUARIO_LISTAR')")
   @RequestMapping(value = { "/" , "" } , method = RequestMethod.GET)
   public List<Usuario> usuarios(){
     List<Usuario> usuarios = jdbcTemplate.queryForList("SELECT * FROM public.tb_usuario", Usuario.class);
     return usuarios;
   }
 
-  @PreAuthorize(value = "hasAuthority('PERM_USUARIO_VER_TOKENS')")
+  @PreAuthorize(value = "#oauth2.clientHasRole('PERM_USUARIO_VER_TOKENS')")
   public List<OAuth2AccessToken> tokensDoUsuario(String usuario){
     Collection<OAuth2AccessToken> tokensByUserName = tokenStore.findTokensByUserName(usuario);
     return new ArrayList<OAuth2AccessToken>( tokensByUserName );

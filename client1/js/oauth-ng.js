@@ -37,6 +37,7 @@ accessTokenService.factory('AccessToken', ['Storage', '$rootScope', '$location',
    */
   service.get = function(){
     return this.token;
+
   };
 
   /**
@@ -508,6 +509,7 @@ directives.directive('oauth', [
       scope.$on('oauth:expired', function() {
         AccessToken.destroy(scope);
         scope.show = 'logged-out';
+        scope.login();
       });
 
       // user is authorized
@@ -520,6 +522,7 @@ directives.directive('oauth', [
       var loggedOut = function() {
         $rootScope.$broadcast('oauth:loggedOut');
         scope.show = 'logged-out';
+        scope.login();
       };
 
       // set the oauth directive to the denied status

@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = { "br.com.efraimgentil.controller" } )
-@Import( { SpringConfig.class , DatabaseConfig.class,  SecurityConfig.class , AuthServerOauth2Config.class } )
+@Import( { SpringConfig.class , DatabaseConfig.class,  SecurityConfig.class , AuthServerOauth2Config.class , ResourceServerConfig.class } )
 public class SpringWebConfig extends WebMvcConfigurerAdapter {
 
 

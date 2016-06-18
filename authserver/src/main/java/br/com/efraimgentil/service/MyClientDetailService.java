@@ -63,25 +63,32 @@ public class MyClientDetailService implements ClientDetailsService {
                     return result;
                   }
                 });
-        result = loadAuthorities( result , clientId , authentication  , jdbcTemplate);
+        result = loadAuthorities( result , clientId , authentication  );
         clientsMap.put( clientFullName , result );
       } catch (Exception e) {
+        e.printStackTrace();
         throw new ClientRegistrationException("Não localizou o client");
       }
     }
     return result;
   }
 
-  private BaseClientDetails loadAuthorities(BaseClientDetails result , String clientId , Authentication authentication , JdbcTemplate jdbcTemplate) {
-    List<String> strings = jdbcTemplate.queryForList("SELECT permissao FROM public.tb_usuario_permissao_client WHERE client_id = ? and login = ?"
-            , new Object[]{clientId, authentication.getName() }
-            , String.class);
+  private BaseClientDetails loadAuthorities(BaseClientDetails result , String clientId , Authentication authentication ) {
+    List<String> permissions = userPermissions( authentication.getName()  , clientId) ;
     List<GrantedAuthority> authorities = new ArrayList<>();
-    for(String permissao : strings ){
+    for(String permissao : permissions ){
       authorities.add( new SimpleGrantedAuthority( "PERM_" + permissao ) );
     }
     result.setAuthorities( authorities );
     return result;
+  }
+
+  public List<String> userPermissions( String login , String clientId ){
+    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+    List<String> permissions = jdbcTemplate.queryForList("SELECT permissao FROM public.tb_usuario_permissao_client WHERE client_id = ? and login = ?"
+            , new Object[]{clientId, login }
+            , String.class);
+    return permissions;
   }
 
 }
