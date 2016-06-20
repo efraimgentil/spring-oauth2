@@ -1,11 +1,24 @@
-var app = angular.module('myApp', ["ngResource", "ngRoute", "ngCookies", "oauth"]);
+var moduleName = "myApp";
+var app = angular.module( moduleName , ["ngResource", "ngRoute", "ngCookies", "oauth"]);
 app.constant("$userResourceUrl", "http://localhost:8080/ws");
 
-app.config(function ($locationProvider) {
-    $locationProvider.html5Mode({
+app.config( function( $routeProvider , $locationProvider) {
+
+    $routeProvider
+        .when('/' , {
+            templateUrl: 'app/view/home.html',
+        })
+        .when('/user-list', {
+            templateUrl: 'app/view/user-list.html',
+        })
+        .otherwise({ //Anything that is not mapped will be considered home
+            templateUrl: 'app/view/resource-not-found.html'
+        });
+
+    /*$locationProvider.html5Mode({
         enabled: true,
         requireBase: false
-    }).hashPrefix('!');
+    }).hashPrefix('!');*/
 });
 app.factory('oauthHttpInterceptor', function (Storage) {
     return {
