@@ -14,7 +14,11 @@ app.config( function( $routeProvider , $locationProvider) {
             controller: "UserListController"
         })
         .when("/user/new" , {
-            templateUrl: 'app/view/user/new-user.html',
+            templateUrl: 'app/view/user/user-form.html',
+            controller: "UserController"
+        })
+        .when("/user/edit/:id" , {
+            templateUrl: 'app/view/user/user-form.html',
             controller: "UserController"
         })
         .otherwise({ //Anything that is not mapped will be considered home

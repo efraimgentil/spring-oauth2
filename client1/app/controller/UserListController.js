@@ -28,4 +28,8 @@ angular.module(moduleName).controller("UserListController" , ["$scope", "$locati
     $scope.newUser = function(){
         $location.path("/user/new")
     }
+
+    $scope.edit = function(userId){
+        $location.path("/user/edit/" + userId );
+    }
 }]);
