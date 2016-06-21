@@ -49,6 +49,13 @@ public class UserController {
     return jdbcTemplate.queryForObject("SELECT * FROM public.tb_usuario where id = ?", new Object[]{userId}, new UserRowMapper() );
   }
 
+  @RequestMapping(value = { "/{id}" } , method = RequestMethod.PUT)
+  public User updateUser( @RequestBody User user ){
+    jdbcTemplate.update("UPDATE public.tb_usuario SET login = ? , nome = ? WHERE id= ?"
+    , user.getLogin() , user.getName() , user.getId() );
+    return jdbcTemplate.queryForObject("SELECT * FROM public.tb_usuario where id = ?", new Object[]{ user.getId() }, new UserRowMapper() );
+  }
+
   @RequestMapping(value = { "/" , "" } , method = RequestMethod.POST)
   public User newUser(@RequestBody User user){
     SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate).withTableName("public.tb_usuario")

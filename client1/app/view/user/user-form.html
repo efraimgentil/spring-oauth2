@@ -14,7 +14,7 @@
     <div class="form-group" ng-show="!user.id">
         <label>Password</label>
         <input type="password" ng-model="user.password" class="form-control" name="password"
-               ng-required="true" />
+               ng-required="true" ng-disabled="user.id" />
     </div>
 
 

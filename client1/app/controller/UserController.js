@@ -16,7 +16,7 @@ angular.module(moduleName).controller("UserController" , ["$scope" , "$location"
     }
 
     $scope.save = function(){
-        userService.save( $scope.user , function(){  });
+        userService.save( $scope.user , function(data){ $scope.cancel(); });
     }
 
 }]);
