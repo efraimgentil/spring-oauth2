@@ -34,7 +34,7 @@
     <oauth
             site="http://localhost:8080"
             client-id="cliente1"
-            redirect-uri="http://localhost:8000/#/"
+            redirect-uri="http://localhost:8000/"
             scope="read"
             template="oauthTemplate.html">
     </oauth>
@@ -157,9 +157,9 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav" ng-show="userAuthenticated">
-                    <menu-directive url="#/user-list" icon-class="fa fa-fw fa-dashboard" name="User List" show-if="permissions['PERM_USUARIO_LISTAR']">
+                    <menu-directive url="#!/user-list" icon-class="fa fa-fw fa-dashboard" name="User List" show-if="permissions['PERM_USUARIO_LISTAR']">
                     </menu-directive>
-                    <menu-directive url="#/new-user" icon-class="fa fa-fw fa-dashboard" name="New User">
+                    <menu-directive url="#!/new-user" icon-class="fa fa-fw fa-dashboard" name="New User">
                     </menu-directive>
                     <li class="active" >
                         <a href="index.html#/"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>

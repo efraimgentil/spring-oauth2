@@ -15,15 +15,15 @@ app.config( function( $routeProvider , $locationProvider) {
         })
         .when("/new-user" , {
             templateUrl: 'app/view/new-user.html',
-        })
+        });/*
         .otherwise({ //Anything that is not mapped will be considered home
             templateUrl: 'app/view/resource-not-found.html'
-        });
+        });*/
 
-    /*$locationProvider.html5Mode({
-        enabled: true,
+    $locationProvider.html5Mode({
+        enabled: false,
         requireBase: false
-    }).hashPrefix('!');*/
+    }).hashPrefix('!');
 });
 app.factory('oauthHttpInterceptor', function (Storage) {
     return {
@@ -41,11 +41,17 @@ app.factory('responseObserver', function ($q, $window) {
     return {
         responseError: function (errorResponse) {
             switch (errorResponse.status) {
+                case  -1:
+                    alert("Was not possible to establish a connection with the server");
+                    break;
                 case 403:
-                    alert("Você não tem acesso a esse recurso");
+                    alert("You don't have access to this resource");
+                    break;
+                case 404:
+                    alert("Resource not found");
                     break;
                 case 500:
-                    alert("Ouve um problema interno");
+                    alert("Internal server error");
                     break;
             }
             return $q.reject(errorResponse);

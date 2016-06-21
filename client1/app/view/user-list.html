@@ -1,6 +1,8 @@
 <h1>User List</h1>
 
-{{users}}
-<ul >
+<ul>
     <li ng-repeat="user in users track by user.id">{{user.id}}</li>
 </ul>
+
+<button class="btn btn-sm btn-success" ng-click="startRefresh()" ng-show="!refreshing" >Start Refresh</button>
+<button class="btn btn-sm btn-danger" ng-click="stopRefresh()" ng-show="refreshing" >Stop Refresh</button>
