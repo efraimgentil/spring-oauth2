@@ -539,9 +539,9 @@ directives.directive('oauth', [
 
       // Hack to update the directive content on logout
       // TODO think to a cleaner solution
-      scope.$on('$routeChangeSuccess', function () {
+      /*scope.$on('$routeChangeSuccess', function () {
         init();
-      });
+      });*/
     };
 
     return definition;

@@ -34,15 +34,15 @@
     <oauth
             site="http://localhost:8080"
             client-id="cliente1"
-            redirect-uri="http://localhost:8000/_index.html"
+            redirect-uri="http://localhost:8000/#/"
             scope="read"
             template="oauthTemplate.html">
     </oauth>
 
-    <div id="wrapper" ng-controller="mainCtrl" >
+    <div id="wrapper" >
 
         <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="mainCtrl" >
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -157,12 +157,10 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav" ng-show="userAuthenticated">
-                    <menu-directive url="#user-list" iconClass="fa fa-fw fa-dashboard" name="User List">
-
+                    <menu-directive url="#/user-list" icon-class="fa fa-fw fa-dashboard" name="User List" show-if="permissions['PERM_USUARIO_LISTAR']">
                     </menu-directive>
-                    <li class="{{userAuthenticated ? true : false}}" ng-show="permissions['']" >
-                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> User List</a>
-                    </li>
+                    <menu-directive url="#/new-user" icon-class="fa fa-fw fa-dashboard" name="New User">
+                    </menu-directive>
                     <li class="active" >
                         <a href="index.html#/"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
@@ -228,7 +226,14 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.9/ngStorage.min.js"></script>
     <script src="app/app.js"></script>
+    <!-- controllers -->
+    <script src="app/controller/UserListController.js"></script>
+    <!-- services -->
+    <script src="app/service/UserService.js" ></script>
+
+    <!-- directives -->
     <script src="app/directives/MenuDirective.js"></script>
+    <!-- -->
     <script src="js/oauth-ng.js"></script>
 </body>
 
