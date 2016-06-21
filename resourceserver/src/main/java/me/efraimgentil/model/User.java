@@ -1,7 +1,5 @@
 package me.efraimgentil.model;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 /**
  * Created by efraimgentil<efraimgentil@gmail.com> on 16/06/16.
  */
@@ -10,12 +8,10 @@ public class User {
   private Integer id;
   private String login;
 
-  @JsonIgnore
+  @com.fasterxml.jackson.annotation.JsonIgnore
   private String password;
 
   private String nome;
-
-
 
   public Integer getId() {
     return id;

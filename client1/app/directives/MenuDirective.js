@@ -10,10 +10,10 @@ angular.module( moduleName ).directive( "menuDirective", [ "$location" , "$rootS
       , transclude: true
       , replace: true
       , link: function( scope , element , attrs ){
-          /*scope.active = scope.url.replace("#","") == $location.path();
+          scope.active = scope.url.replace("#","") == $location.path();
           $rootScope.$on('$routeChangeSuccess', function(e, current, pre) {
-              scope.active = scope.url.replace("#","") == $location.path();
-          });*/
+              scope.active = scope.url.replace("#!","") == $location.path();
+          });
       }
       ,templateUrl: 'app/view/directives/menu-directive.html'
   };
