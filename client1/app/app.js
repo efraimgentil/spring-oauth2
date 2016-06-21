@@ -9,12 +9,13 @@ app.config( function( $routeProvider , $locationProvider) {
         .when('/' , {
             templateUrl: 'app/view/home.html',
         })
-        .when('/user-list', {
-            templateUrl: 'app/view/user-list.html',
+        .when('/user', {
+            templateUrl: 'app/view/user/user-list.html',
             controller: "UserListController"
         })
-        .when("/new-user" , {
-            templateUrl: 'app/view/new-user.html',
+        .when("/user/new" , {
+            templateUrl: 'app/view/user/new-user.html',
+            controller: "UserController"
         })
         .otherwise({ //Anything that is not mapped will be considered home
             templateUrl: 'app/view/resource-not-found.html'
@@ -42,6 +43,7 @@ app.factory('responseObserver', function ($q, $window) {
         responseError: function (errorResponse) {
             switch (errorResponse.status) {
                 case  -1:
+                    console.log(errorResponse);
                     alert("Was not possible to establish a connection with the server");
                     break;
                 case 403:

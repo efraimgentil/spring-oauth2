@@ -1,0 +1,26 @@
+<h1>User List</h1>
+
+
+<button class="btn btn-default pull-right" ng-click="newUser()">New User</button>
+
+
+<table class="table table-condenced">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Login</th>
+            <th>Nome</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="user in users track by user.id">
+            <td>{{user.id}}</td>
+            <td>{{user.login}}</td>
+            <td>{{user.nome}}</td>
+        </tr>
+    </tbody>
+
+</table>
+
+<button class="btn btn-sm btn-success" ng-click="startRefresh()" ng-show="!refreshing" >Start Refresh</button>
+<button class="btn btn-sm btn-danger" ng-click="stopRefresh()" ng-show="refreshing" >Stop Refresh</button>

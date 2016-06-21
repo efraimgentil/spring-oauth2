@@ -1,0 +1,26 @@
+<h1>User</h1>
+
+<form name="userForm" ng-submit="save()">
+    <div class="form-group">
+        <label>Name</label>
+        <input ng-model="user.name" class="form-control" name="name"
+               ng-required="true" />
+    </div>
+    <div class="form-group">
+        <label>Login</label>
+        <input ng-model="user.login" class="form-control" name="login"
+            ng-required="true" />
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" ng-model="user.password" class="form-control" name="password"
+               ng-required="true" />
+    </div>
+
+
+    <div class="form-group">
+        <button class="btn btn-success btn-sm" type="submit">Save</button>
+        <button class="btn btn-danger btn-sm" ng-click="cancel()">Cancel</button>
+    </div>
+
+</form>

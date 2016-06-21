@@ -8,4 +8,10 @@ angular.module('myApp').service("userService" , [ "$userResourceUrl", "$http", f
         )
     }
 
+    this.save = function(user , callback){
+        $http.post( $userResourceUrl + "/user/" , user ).success(function(data){
+            callback(data);
+        });
+    }
+
 }]);

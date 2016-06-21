@@ -157,7 +157,7 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav" ng-show="userAuthenticated">
-                    <menu-directive url="#!/user-list" icon-class="fa fa-fw fa-dashboard" name="User List" show-if="permissions['PERM_USUARIO_LISTAR']">
+                    <menu-directive url="#!/user" icon-class="fa fa-fw fa-user" name="User List" show-if="permissions['PERM_USUARIO_LISTAR']">
                     </menu-directive>
                     <menu-directive url="#!/new-user" icon-class="fa fa-fw fa-dashboard" name="New User">
                     </menu-directive>
@@ -229,6 +229,7 @@
     <!-- controllers -->
     <script src="app/controller/MainController.js"></script>
     <script src="app/controller/UserListController.js"></script>
+    <script src="app/controller/UserController.js"></script>
     <!-- services -->
     <script src="app/service/AuthenticationService.js" ></script>
     <script src="app/service/UserService.js" ></script>
