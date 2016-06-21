@@ -1,6 +1,7 @@
 var moduleName = "myApp";
 var app = angular.module( moduleName , ["ngResource", "ngRoute", "ngCookies", "oauth"]);
-app.constant("$userResourceUrl", "http://localhost:8080/ws");
+app.constant("$authorizationResourceUrl", "http://localhost:8080/ws");
+app.constant("$userResourceUrl", "http://localhost:9080/");
 
 app.config( function( $routeProvider , $locationProvider) {
 
@@ -10,7 +11,7 @@ app.config( function( $routeProvider , $locationProvider) {
         })
         .when('/user-list', {
             templateUrl: 'app/view/user-list.html',
-            controller: "userListController"
+            controller: "UserListController"
         })
         .when("/new-user" , {
             templateUrl: 'app/view/new-user.html',
@@ -55,7 +56,7 @@ app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('oauthHttpInterceptor');
     $httpProvider.interceptors.push('responseObserver');
 });
-app.service("authenticationService", ["$http", "Storage", "$userResourceUrl", function ($http, Storage, $userResourceUrl) {
+app.service("authenticationService", ["$http", "Storage", "$authorizationResourceUrl", function ($http, Storage, $authorizationResourceUrl) {
     var self = this;
     self.permissions = null;
 
@@ -65,7 +66,7 @@ app.service("authenticationService", ["$http", "Storage", "$userResourceUrl", fu
         }
         var token = Storage.get("token");
         if (token) {
-            $http.get($userResourceUrl + "/user-permissions").then(function success(response) {
+            $http.get($authorizationResourceUrl + "/user-permissions").then(function success(response) {
                 self.permissions =  response.data;
                 callback(self.permissions);
             });

@@ -1,1 +1,6 @@
 <h1>User List</h1>
+
+{{users}}
+<ul >
+    <li ng-repeat="user in users track by user.id">{{user.id}}</li>
+</ul>

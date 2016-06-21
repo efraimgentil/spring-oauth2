@@ -1,6 +1,6 @@
 package me.efraimgentil.controller;
 
-import me.efraimgentil.model.Usuario;
+import me.efraimgentil.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by efraimgentil<efraimgentil@gmail.com> on 16/06/16.
  */
 @RestController
-@RequestMapping(value = { "/usuario" } )
-public class UsuarioController {
+@RequestMapping(value = { "/user" } )
+public class UserController {
 
   @Autowired
   JdbcTokenStore tokenStore;
@@ -29,8 +30,16 @@ public class UsuarioController {
 
   @PreAuthorize(value = "#oauth2.clientHasRole('PERM_USUARIO_LISTAR')")
   @RequestMapping(value = { "/" , "" } , method = RequestMethod.GET)
-  public List<Usuario> usuarios(){
-    List<Usuario> usuarios = jdbcTemplate.queryForList("SELECT * FROM public.tb_usuario", Usuario.class);
+  public List<User> usuarios(){
+    List<User> usuarios = new ArrayList<>();
+    List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from public.tb_usuario");
+    for(Map<String,Object> map : maps){
+      User u = new User();
+      u.setId((Integer) map.get("id"));
+      u.setLogin((String) map.get("login") );
+      u.setNome((String) map.get("nome") );
+      usuarios.add( u );
+    }
     return usuarios;
   }
 

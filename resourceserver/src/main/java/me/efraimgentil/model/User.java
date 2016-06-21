@@ -5,7 +5,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 /**
  * Created by efraimgentil<efraimgentil@gmail.com> on 16/06/16.
  */
-public class Usuario {
+public class User {
 
   private Integer id;
   private String login;
