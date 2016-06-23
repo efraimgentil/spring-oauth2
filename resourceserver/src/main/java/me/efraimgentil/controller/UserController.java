@@ -24,10 +24,7 @@ import java.util.*;
 public class UserController {
 
   @Autowired
-  JdbcTokenStore tokenStore;
-  @Autowired
   JdbcTemplate jdbcTemplate;
-
 
   @PreAuthorize(value = "#oauth2.clientHasRole('PERM_USUARIO_LISTAR')")
   @RequestMapping(value = { "/" , "" } , method = RequestMethod.GET)
@@ -67,12 +64,6 @@ public class UserController {
     parameters.put("nome" , user.getName() );
     Number userId = insert.executeAndReturnKey(parameters);
     return jdbcTemplate.queryForObject("SELECT * FROM public.tb_usuario where id = ?", new Object[]{userId}, new UserRowMapper() );
-  }
-
-  @PreAuthorize(value = "#oauth2.clientHasRole('PERM_USUARIO_VER_TOKENS')")
-  public List<OAuth2AccessToken> tokensDoUsuario(String usuario){
-    Collection<OAuth2AccessToken> tokensByUserName = tokenStore.findTokensByUserName(usuario);
-    return new ArrayList<OAuth2AccessToken>( tokensByUserName );
   }
 
 }

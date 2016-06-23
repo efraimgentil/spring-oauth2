@@ -5,6 +5,9 @@
 angular.module(moduleName).controller('MainController', ["$scope", "$resource", "$http", "AuthenticationService",
     function ($scope, $resource, $http, AuthenticationService) {
         var self = this;
+
+        $scope.userInfo = { login:"" , name: ""};
+
         $scope.$on('oauth:login', function (event, token) {
             self.loadPermissions();
         });
@@ -20,7 +23,11 @@ angular.module(moduleName).controller('MainController', ["$scope", "$resource", 
                 }
                 console.log($scope.permissions);
             });
+            AuthenticationService.getUserInfo(function(data){
+               $scope.userInfo = data;
+            });
             $scope.userAuthenticated = AuthenticationService.isUserAuthenticated();
+
         };
     }
 ]);

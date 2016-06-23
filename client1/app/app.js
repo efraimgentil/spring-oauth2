@@ -50,6 +50,9 @@ app.factory('responseObserver', function ($q, $window) {
                     console.log(errorResponse);
                     alert("Was not possible to establish a connection with the server");
                     break;
+                case 401:
+                    alert("You don't have access to this resource");
+                    break;
                 case 403:
                     alert("You don't have access to this resource");
                     break;

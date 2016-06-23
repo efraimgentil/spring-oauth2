@@ -1,7 +1,10 @@
 package br.com.efraimgentil.controller;
 
+import br.com.efraimgentil.model.UserInfo;
 import br.com.efraimgentil.service.MyClientDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -25,6 +30,9 @@ import java.util.Map;
 public class UserController {
 
   @Autowired
+  JdbcTemplate jdbcTemplate;
+
+  @Autowired
   MyClientDetailService myClientDetailService;
 
   @RequestMapping("/ws/user")
@@ -35,6 +43,22 @@ public class UserController {
   @RequestMapping(value=" /user-o" ,method = RequestMethod.GET)
   public OAuth2Authentication read(OAuth2Authentication auth) {
     return auth;
+  }
+
+
+  @RequestMapping(value="/ws/user-info" , method = RequestMethod.GET)
+  public UserInfo userInfo(Principal user){
+    UserInfo userInfo = jdbcTemplate.queryForObject("SELECT login , nome FROM public.tb_usuario WHERE login = ?",
+            new Object[]{user.getName()}, new RowMapper<UserInfo>() {
+              @Override
+              public UserInfo mapRow(ResultSet resultSet, int i) throws SQLException {
+                UserInfo userInfo = new UserInfo();
+                userInfo.setLogin(resultSet.getString("login"));
+                userInfo.setName(resultSet.getString("nome"));
+                return userInfo;
+              }
+            });
+    return userInfo;
   }
 
   @RequestMapping(value= "/ws/user-permissions" , method = RequestMethod.GET)

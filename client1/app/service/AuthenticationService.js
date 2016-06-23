@@ -2,6 +2,11 @@ angular.module(moduleName).service("AuthenticationService", ["$http", "Storage",
     var self = this;
     self.permissions = null;
 
+    this.getUserInfo = function(callback){
+        $http.get($authorizationResourceUrl  +"/user-info" ).then(function success(response){
+           callback(response.data);
+        });
+    }
     this.getUserPermissions = function (callback) {
         if (self.permissions) {
             callback(self.permissions);
