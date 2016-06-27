@@ -99,7 +99,7 @@ accessTokenService.factory('AccessToken', ['Storage', '$rootScope', '$location',
    * Set the access token from the sessionStorage.
    */
   var setTokenFromSession = function(){
-    var params = Storage.get('token') || $cookies.getObject('token');
+    var params = Storage.get('token'); // || $cookies.getObject('token');*/
     if (params) {
       setToken(params);
     }
@@ -116,7 +116,7 @@ accessTokenService.factory('AccessToken', ['Storage', '$rootScope', '$location',
     angular.extend(service.token, params);      // set the access token params
     setTokenInSession();                // save the token into the session
     setExpiresAtEvent();                // event to fire when the token expires
-    setTokenInCookie();
+    //setTokenInCookie();
 
     return service.token;
   };
@@ -255,6 +255,12 @@ endpointClient.factory('Endpoint', function() {
     window.location.replace(targetLocation);
   };
 
+  service.logout = function( overrides ) {
+    var params = angular.extend( {}, service.config, overrides);
+    window.location.replace(params.site + "/logout");
+  };
+
+
   return service;
 });
 
@@ -295,10 +301,10 @@ profileClient.factory('Profile', ['$http', 'AccessToken', '$rootScope', function
 
 var storageService = angular.module('oauth.storage', ['ngStorage']);
 
-storageService.factory('Storage', ['$rootScope', '$sessionStorage', '$localStorage', function($rootScope, $sessionStorage, $localStorage){
+storageService.factory('Storage', ['$rootScope', '$cookies', '$sessionStorage', '$localStorage', function($rootScope, $cookies , $sessionStorage, $localStorage){
 
   var service = {
-    storage: $sessionStorage // By default
+    storage: $cookies //$sessionStorage // By default
   };
 
   /**
@@ -306,9 +312,10 @@ storageService.factory('Storage', ['$rootScope', '$sessionStorage', '$localStora
    * Returns the item's previous value
    */
   service.delete = function (name) {
-    var stored = this.get(name);
+    storage.remove(name);
+    /*var stored = this.get(name);
     delete this.storage[name];
-    return stored;
+    return stored;*/
   };
 
   /**
@@ -316,6 +323,7 @@ storageService.factory('Storage', ['$rootScope', '$sessionStorage', '$localStora
    */
   service.get = function (name) {
     return this.storage[name];
+    //return this.storage[name];
   };
 
   /**
@@ -331,11 +339,12 @@ storageService.factory('Storage', ['$rootScope', '$sessionStorage', '$localStora
    * Change the storage service being used
    */
   service.use = function (storage) {
+    storage: $cookies;/*
     if (storage === 'sessionStorage') {
       this.storage = $sessionStorage;
     } else if (storage === 'localStorage') {
       this.storage = $localStorage;
-    }
+    }*/
   };
 
   return service;
@@ -510,6 +519,12 @@ directives.directive('oauth', [
         AccessToken.destroy(scope);
         scope.show = 'logged-out';
         scope.login();
+      });
+
+      scope.$on('oauth:loggedOut', function() {
+        AccessToken.destroy(scope);
+        scope.show = 'logged-out';
+        Endpoint.logout();
       });
 
       // user is authorized

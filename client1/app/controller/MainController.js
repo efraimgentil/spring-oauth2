@@ -1,12 +1,11 @@
 /**
  * Created by efraimgentil on 20/06/16.
  */
-
-angular.module(moduleName).controller('MainController', ["$scope", "$resource", "$http", "AuthenticationService",
-    function ($scope, $resource, $http, AuthenticationService) {
+angular.module(moduleName).controller('MainController', ["$scope", "$resource", "$http", "AuthenticationService", "$rootScope",
+    function ($scope, $resource, $http, AuthenticationService , $rootScope) {
         var self = this;
 
-        $scope.userInfo = { login:"" , name: ""};
+        $scope.userInfo = { login: "" , name: ""};
 
         $scope.$on('oauth:login', function (event, token) {
             self.loadPermissions();
@@ -15,6 +14,7 @@ angular.module(moduleName).controller('MainController', ["$scope", "$resource", 
             self.loadPermissions();
         });
 
+        $scope.permissions = {};
         self.loadPermissions = function () {
             $scope.permissions = {};
             AuthenticationService.getUserPermissions(function (data) {
@@ -24,10 +24,13 @@ angular.module(moduleName).controller('MainController', ["$scope", "$resource", 
                 console.log($scope.permissions);
             });
             AuthenticationService.getUserInfo(function(data){
-               $scope.userInfo = data;
+                $scope.userInfo = data;
             });
             $scope.userAuthenticated = AuthenticationService.isUserAuthenticated();
+        }
 
-        };
+        $scope.logout = function(){
+            $rootScope.$broadcast("oauth:loggedOut");
+        }
     }
 ]);
