@@ -43,15 +43,15 @@ public class MyAccessTokenConverter extends DefaultAccessTokenConverter {
     if ( map.containsKey(GRANT_TYPE) ) {
       parameters.put(GRANT_TYPE, (String) map.get(GRANT_TYPE));
     }
-    Set<String> resourceIds = new LinkedHashSet<String>(map.containsKey(AUD) ? getAudience(map)
-            : Collections.<String>emptySet());
+    /*Set<String> resourceIds = new LinkedHashSet<String>(map.containsKey(AUD) ? getAudience(map)
+            : Collections.<String>emptySet());*/
 
     Collection<? extends GrantedAuthority> authorities = null;
     if ( map.containsKey(USER_CLIENT_AUTHORITIES) ) {
       String[] roles = ((Collection<String>)map.get(USER_CLIENT_AUTHORITIES)).toArray(new String[0]);
       authorities = AuthorityUtils.createAuthorityList(roles);
     }
-    OAuth2Request request = new OAuth2Request(parameters, clientId, authorities, true, scope, resourceIds, null, null,
+    OAuth2Request request = new OAuth2Request(parameters, clientId, authorities, true, scope, null , null, null,
             null);
     return new OAuth2Authentication(request, user);
   }

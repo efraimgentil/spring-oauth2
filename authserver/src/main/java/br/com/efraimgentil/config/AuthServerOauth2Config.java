@@ -92,7 +92,7 @@ public class AuthServerOauth2Config extends AuthorizationServerConfigurerAdapter
   @Bean
   public JwtAccessTokenConverter accessTokenConverter() {
     JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-    converter.setAccessTokenConverter( new MyAccessTokenConverter() );
+    converter.setAccessTokenConverter(new MyAccessTokenConverter() );
     converter.setSigningKey("123456");
     return converter;
   }
