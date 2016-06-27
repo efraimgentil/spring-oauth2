@@ -2,17 +2,17 @@ angular.module('myApp').service("userService" , [ "$userResourceUrl", "$http", f
 
     this.getUsers = function( callback ){
         $http.get($userResourceUrl + "/user/" ).then(
-            function success(response){
-                callback(response.data);
-            }
+          function success(response){
+              callback(response.data);
+          }
         )
     }
 
     this.getUser = function( userId  , callback){
         $http.get($userResourceUrl + "/user/" + userId ).then(
-            function success(response){
-                callback(response.data);
-            }
+          function success(response){
+              callback(response.data);
+          }
         )
     }
 

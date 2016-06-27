@@ -1,9 +1,12 @@
-from flask import Flask
+from flask import Flask , jsonify
 from flask_jwt import JWT, jwt_required, current_identity, JWTError
 from functools import wraps
+from flask_cors import CORS, cross_origin
+import time
 import jwt
 
 app  = Flask(__name__)
+cors = CORS(app , resources={r"/api/*": {"origins": "*"}})
 
 app.config['RESOURCE_ID'] = 'resource2'
 app.config['SECRET_KEY'] = '123456'
@@ -71,11 +74,14 @@ def has_client_authoritie(authority):
 #def hello():
     #return "Hello World!"
 
-@app.route('/protected')
+@app.route('/api/time')
 @jwt_required()
 @has_client_authoritie("PERM_USUARIO_LISTAR")
 def return_current_time():
-    return '%s' % current_identity    
+    return  jsonify( 
+        username = current_identity['user_name']
+        ,current_time = int(round(time.time() * 1000))
+         )  
 
 
 

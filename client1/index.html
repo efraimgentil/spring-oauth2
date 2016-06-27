@@ -159,7 +159,7 @@
                 <ul class="nav navbar-nav side-nav" ng-show="userAuthenticated">
                     <menu-directive url="#!/user" icon-class="fa fa-fw fa-user" name="User List" show-if="permissions['PERM_USUARIO_LISTAR']">
                     </menu-directive>
-                    <menu-directive url="#!/new-user" icon-class="fa fa-fw fa-dashboard" name="New User">
+                    <menu-directive url="#!/date" icon-class="fa fa-fw fa-dashboard" name="Date Time" >
                     </menu-directive>
                     <li >
                         <a href="index.html#/"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
@@ -230,9 +230,11 @@
     <script src="app/controller/MainController.js"></script>
     <script src="app/controller/UserListController.js"></script>
     <script src="app/controller/UserController.js"></script>
+    <script src="app/controller/DateController.js"></script>
     <!-- services -->
     <script src="app/service/AuthenticationService.js" ></script>
     <script src="app/service/UserService.js" ></script>
+    <script src="app/service/DateService.js" ></script>
 
     <!-- directives -->
     <script src="app/directives/MenuDirective.js"></script>

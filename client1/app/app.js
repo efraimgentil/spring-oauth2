@@ -2,6 +2,7 @@ var moduleName = "myApp";
 var app = angular.module( moduleName , ["ngResource", "ngRoute", "ngCookies", "oauth"]);
 app.constant("$authorizationResourceUrl", "http://localhost:8080/ws");
 app.constant("$userResourceUrl", "http://localhost:9080/");
+app.constant("$dateResourceUrl", "http://127.0.0.1:5000/");
 
 app.config( function( $routeProvider , $locationProvider) {
 
@@ -21,6 +22,10 @@ app.config( function( $routeProvider , $locationProvider) {
             templateUrl: 'app/view/user/user-form.html',
             controller: "UserController"
         })
+      .when("/date" , {
+          templateUrl: 'app/view/date.html',
+          controller: "DateController"
+      })
         .otherwise({ //Anything that is not mapped will be considered home
             templateUrl: 'app/view/resource-not-found.html'
         });
