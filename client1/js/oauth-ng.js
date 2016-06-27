@@ -312,7 +312,7 @@ storageService.factory('Storage', ['$rootScope', '$cookies', '$sessionStorage', 
    * Returns the item's previous value
    */
   service.delete = function (name) {
-    storage.remove(name);
+    this.storage.remove(name);
     /*var stored = this.get(name);
     delete this.storage[name];
     return stored;*/
